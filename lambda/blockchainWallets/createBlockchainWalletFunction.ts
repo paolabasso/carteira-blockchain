@@ -3,12 +3,11 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda
 import { BlockchainWallet, BlockchainWalletRepository } from "/opt/nodejs/blockchainWalletsLayer"
 import { DynamoDB } from "aws-sdk"
 
+
 const blockchainWalletsDb = process.env.BLOCKCHAIN_WALLETS_DB!
 const dbClient = new DynamoDB.DocumentClient()
 
 const blockchainWalletRepository = new BlockchainWalletRepository(dbClient, blockchainWalletsDb)
-
-
 const schema = Joi.object({
     walletName: Joi.string().required(),
     walletAddress: Joi.string().required(),
@@ -23,24 +22,21 @@ export async function handler(event: APIGatewayProxyEvent,
 
     console.log(`API Gateway RequestId: ${gtwRequestId} - Lambda RequestId: ${lambdaRequestId}`)
 
-    const walletId = event.pathParameters!.id as string
     const walletData = JSON.parse(event.body!) as BlockchainWallet
-    console.log(`PUT /wallets/${walletId} - DATA: ${walletData}`)
-    try {
-        const { value, error } = schema.validate(walletData)
-        if (!error) {
-            const walletUpdated = await blockchainWalletRepository.updateBlockchainWallet(walletId, value)
-            return {
-                statusCode: 201,
-                body: JSON.stringify(walletUpdated)
-            }
-        }
-        throw error
-    } catch (error) {
-        console.error((<Error>error).message)
+    console.log(`CREATE - DATA: ${JSON.stringify(walletData)}`)
+    
+    const { value , error } = schema.validate(walletData)
+    if (!error) {
+        const walletCreated = await blockchainWalletRepository.createBlockchainWallet(value)
+        console.log(`CREATED SUCCESSFULLY - ID: ${walletCreated.id}`)
         return {
-            statusCode: 404,
-            body: (<Error>error).message
+            statusCode: 201,
+            body: JSON.stringify(walletCreated)
         }
     }
+        console.error((<Error>error).message)
+        return {
+            statusCode: 400,
+            body: (<Error>error).message
+        }
 }

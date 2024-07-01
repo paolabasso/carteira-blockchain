@@ -42,6 +42,7 @@ export class BlockchainWalletRepository {
     async createBlockchainWallet(blockchainWallet: BlockchainWallet): Promise<BlockchainWallet> {
         blockchainWallet.id = uuid()
         blockchainWallet.createdAt = new Date().toISOString()
+        blockchainWallet.updatedAt = new Date().toISOString()
         await this.dbClient.put({
             TableName: this.blockchainWalletsDb,
             Item: blockchainWallet

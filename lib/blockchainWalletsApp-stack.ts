@@ -53,7 +53,7 @@ export class BlockchainWalletsAppStack extends cdk.Stack {
         this.createBlockchainWalletHandler = new lambdaNodeJS.NodejsFunction(this, "CreateBlockchainWalletFunction", {
             runtime: lambda.Runtime.NODEJS_20_X,
             functionName: "CreateBlockchainWalletFunction",
-            entry: "lambda/blockchainWallets/createBlockchainWalletHandler.ts",
+            entry: "lambda/blockchainWallets/createBlockchainWalletFunction.ts",
             handler: "handler",
             memorySize: 512,
             timeout: cdk.Duration.seconds(5),
@@ -72,7 +72,7 @@ export class BlockchainWalletsAppStack extends cdk.Stack {
         this.deleteBlockchainWalletHandler = new lambdaNodeJS.NodejsFunction(this, "DeleteBlockchainWalletFunction", {
             runtime: lambda.Runtime.NODEJS_20_X,
             functionName: "DeleteBlockchainWalletFunction",
-            entry: "lambda/blockchainWallets/deleteBlockchainWalletHandler.ts",
+            entry: "lambda/blockchainWallets/deleteBlockchainWalletFunction.ts",
             handler: "handler",
             memorySize: 512,
             timeout: cdk.Duration.seconds(5),
@@ -91,7 +91,7 @@ export class BlockchainWalletsAppStack extends cdk.Stack {
         this.updateBlockchainWalletHandler = new lambdaNodeJS.NodejsFunction(this, "UpdateBlockchainWalletFunction", {
             runtime: lambda.Runtime.NODEJS_20_X,
             functionName: "UpdateBlockchainWalletFunction",
-            entry: "lambda/blockchainWallets/updateBlockchainWalletHandler.ts",
+            entry: "lambda/blockchainWallets/updateBlockchainWalletFunction.ts",
             handler: "handler",
             memorySize: 512,
             timeout: cdk.Duration.seconds(5),

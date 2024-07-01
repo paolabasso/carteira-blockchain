@@ -1,3 +1,4 @@
+import * as Joi from "joi"
 import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda"
 import { BlockchainWalletRepository } from "/opt/nodejs/blockchainWalletsLayer"
 import { DynamoDB } from "aws-sdk"
@@ -15,9 +16,10 @@ export async function handler(event: APIGatewayProxyEvent,
 
     console.log(`API Gateway RequestId: ${gtwRequestId} - Lambda RequestId: ${lambdaRequestId}`)
     const walletId = event.pathParameters!.id as string
-    console.log(`DELETE - ID: ${walletId}`)
+
     try {
         const walletDeleted = await blockchainWalletRepository.deleteBlockchainWallet(walletId)
+        console.log(`DELETED SUCCESSFULLY - ID: ${walletId}`)
         return {
             statusCode: 200,
             body: JSON.stringify(walletDeleted)

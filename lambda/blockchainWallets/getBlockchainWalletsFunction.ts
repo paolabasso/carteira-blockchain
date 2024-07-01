@@ -16,9 +16,8 @@ export async function handler(event: APIGatewayProxyEvent,
     console.log(`API Gateway RequestId: ${gtwRequestId} - Lambda RequestId: ${lambdaRequestId}`)
 
     if (event.resource === "/wallets") {
-        console.log('GET ALL')
         const walletList = await blockchainWalletRepository.getAllBlockchainWallets()
-
+        console.log('GET ALL SUCCESSFULLY')
         return {
             statusCode: 200,
             body: JSON.stringify(walletList)
@@ -26,9 +25,10 @@ export async function handler(event: APIGatewayProxyEvent,
     }
 
     const walletId = event.pathParameters!.id as string
-    console.log(`GET - ID: ${walletId}`)
+ 
     try {
         const wallet = await blockchainWalletRepository.getBlockchainWalletById(walletId)
+        console.log(`GET SUCCESSFULLY - ID: ${walletId}`)
         return {
             statusCode: 200,
             body: JSON.stringify(wallet)
