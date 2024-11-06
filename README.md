@@ -17,10 +17,13 @@ O presente projeto realiza um CRUD(Create, Read, Update e Delete) em uma tabela 
 ## Comandos importantes
 - Para a primeira vez que rodar o projeto:
 cdk bootstrap
+
 - Para provisionar os recursos:
 cdk deploy --all
+
 - Para destruir os recursos:
 cdk destroy --all
+
 
 
 
